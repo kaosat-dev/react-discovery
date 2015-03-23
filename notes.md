@@ -36,4 +36,18 @@ Following tutorial at https://facebook.github.io/react/docs/tutorial.html
   hide the implmentation details)
     
         https://facebook.github.io/react/docs/two-way-binding-helpers.html
+        
+        
+ Following "tutorial" at http://facebook.github.io/react/docs/interactivity-and-dynamic-uis.html 
+  - Autobinding: nice ! no "this" issue in event handlers
+  - state : 
+    - **represents change in time**
+    - think state machines
+    - **State should contain data that a component's event handlers may change to trigger a UI update**
+  - componentDidMount : pretty close to polymer's *attached* lifecycle callback : called once
+   *immediately after the initial rendering* : see here for more info on lifecycle callbacks:
+   https://facebook.github.io/react/docs/component-specs.html
+  - componentWillUnmount: pretty close to polymer's *detached* lifecycle callback: do *any cleanup there*
+  
+  
   

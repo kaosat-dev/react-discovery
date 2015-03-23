@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <script src="build/react.js"></script>
+    <script src="build/JSXTransformer.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/showdown/0.3.1/showdown.min.js"></script>
+    
+    <style>
+
+    </style>
+  </head>
+  <body>
+    <div id="mount-point"></div>
+    <script type="text/jsx">
+      /** @jsx React.DOM */
+      var LikeButton = React.createClass({
+        getInitialState: function() {
+          return {liked: false,tick:0};
+        },
+        componentDidMount:function(){
+          console.log("mounted");
+          this._timeout = setInterval(function () {
+             this.update();
+         }.bind(this), 1000);
+        },
+        componentWillUnmount: function(){
+          // Clear the timeout when the component unmounts
+          clearInterval(this._timeout); 
+        },
+        update:function(){
+          console.log("updating");
+          this.setState({liked: this.state.liked, tick:this.state.tick + 1   });
+        },
+        handleClick: function(event) {
+          this.setState({liked: !this.state.liked , tick:this.state.tick});
+        },
+        render: function() {
+          var text = this.state.liked ? 'like' : 'haven\'t liked';
+          return (
+            <p onClick={this.handleClick}>
+              You {text} this. Click to toggle.
+              <br/>
+              Tick tock, state changes over time { this.state.tick }
+            </p>
+          );
+        }
+      });
+
+      React.render(
+        <LikeButton />,
+        document.getElementById('mount-point')
+      );
+    </script>
+  </body>
+</html>
