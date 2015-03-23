@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <script src="build/react.js"></script>
+    <script src="build/JSXTransformer.js"></script>
+  </head>
+  <body>
+    <div id="mount-point"></div>
+    <script type="text/jsx">
+      /** @jsx React.DOM */
+      
+     var MyComponent = React.createClass({
+          getInitialState: function(){
+              return {
+                  count: 5
+              }
+          },
+          incrementCount: function(){
+            this.setState({
+              count: this.state.count + 1
+            });
+          },
+          propTest:function(){
+            this.props.name = "thingamagic";
+          },
+          ///
+          render: function(){
+            console.log("rendering");
+              return (
+                <div class="myComponent">
+                  <h1>Hello, {this.props.name}!!!! XXX {this.state.count}</h1>
+                  <button type="button" onClick={this.incrementCount}>Increment</button>
+                  <button type="button" onClick={this.propTest}>Do some stuff</button>
+                </div>
+              );
+          },
+          componentWillMount:function(){
+            console.log("will mount");
+          },
+          componentDidMount:function(){
+            console.log("mounted");
+          },
+          componentWillUnmount:function(){
+            console.log("will unmount");
+          },
+          shouldComponentUpdate:function( params ){
+            console.log("should I update",params);
+          }
+      });
+      React.renderComponent(
+          <MyComponent name="foo"/>,
+          document.getElementById('mount-point')
+      );
+      /*React.renderComponent(
+        React.DOM.h1(null, 'Hello, world!'),
+        document.getElementById('mount-point')
+      );*/
+    </script>
+  </body>
+</html>
