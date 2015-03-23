@@ -16,4 +16,24 @@ Following tutorial at : https://scotch.io/tutorials/learning-react-getting-start
     - if not returning true , no re-rendering
     
  
+Following tutorial at https://facebook.github.io/react/docs/tutorial.html
+
+  - general:
+    - composition is rather trivial
+    - feels **very fast**
+    - dom node referencing is a bit verbose (more so than the ** this.$ ** of polymer),
+     but works :
+     
+          <input type="text" placeholder="Your name" ref="author" />
+          
+          React.findDOMNode(this.refs.author).value
+          
+  - propagating data back to the parent component is done via events/handlers
+    - event handlers are also added to the component's props "this.props.onCommentSubmit"
     
+  - there are some helpers (semantic sugar) for "pseudo dual way databing" (to be used with 
+  caution, which is understandable as it might convey the wrong meaning, although it does 
+  hide the implmentation details)
+    
+        https://facebook.github.io/react/docs/two-way-binding-helpers.html
+  

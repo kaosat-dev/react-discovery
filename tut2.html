@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <script src="build/react.js"></script>
+    <script src="build/JSXTransformer.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/showdown/0.3.1/showdown.min.js"></script>
+    
+    <style>
+      .commentBox{
+        color:red;
+        padding:10px;
+      }
+      
+      .commentList{
+        background:orange;
+        color:black;
+        max-height:200px;
+        overflow-y:auto;
+      }
+      .comment{
+        background:black;
+        color:white;
+        text-align:center;
+      }
+      
+      .commentForm{
+        margin-top:20px;
+        background: rgb(236, 37, 52);
+        color: white;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="mount-point"></div>
+    <script type="text/jsx">
+      /** @jsx React.DOM */
+      var CommentBox = React.createClass({
+        getInitialState: function() {
+          //return {data: []};
+          return {data: this.props.data};
+        },
+        handleCommentSubmit:function(comment){
+          console.log("comment",comment);
+          this.setState({
+            data: this.state.data.concat( [comment] )
+           } );
+        },
+        render: function() {
+          return (
+            <div className="commentBox">
+              Hello, world! I am a CommentBox.
+              <h1>Comments</h1>
+              <CommentList data={this.state.data}/>
+              <CommentForm onCommentSubmit={this.handleCommentSubmit} />
+            </div>
+          );
+        }
+      });
+      
+      
+      var CommentList = React.createClass({
+        getInitialState: function(){
+           return {
+             initialComments:[
+              {author:"foobar",text:"oh , goody!"},
+              {author:"zorg",text:"nope!!"}
+             ],
+             comments:[],
+           }
+        },
+        componentWillMount: function(){
+          this.setState({
+            comments: this.state.initialComments,
+            magic:"some kind of magic"
+            });
+          console.log("this.state", this.state);
+        },
+      
+      render: function() {
+        var self = this;
+        return (
+          <div className="commentList">
+            <div>
+            {
+              this.props.data.map(function(item) {
+                return <Comment author={item.author}>{item.text}</Comment>
+              })
+            }
+            </div>
+          </div>
+        );
+      }
+    });
+
+    var CommentForm = React.createClass({
+      handleSubmit: function(e) {
+        e.preventDefault();
+        var author = React.findDOMNode(this.refs.author).value.trim();
+        var text = React.findDOMNode(this.refs.text).value.trim();
+        if (!text || !author) {
+          return;
+        }
+        
+        //call the provided onCommentSubmit
+        this.props.onCommentSubmit({author: author, text: text});
+        
+        React.findDOMNode(this.refs.author).value = '';
+        React.findDOMNode(this.refs.text).value = '';
+        return;
+      },
+      render: function() {
+       return (
+          <form className="commentForm" onSubmit={this.handleSubmit}>
+            <input type="text" placeholder="Your name" ref="author" />
+            <input type="text" placeholder="Say something..." ref="text" />
+            <input type="submit" value="Post" />
+          </form>
+        );
+      }
+    });    
+    
+    var converter = new Showdown.converter();
+    var Comment = React.createClass({
+      render: function() {
+        var rawMarkup = converter.makeHtml(this.props.children.toString());
+        return (
+          <div className="comment">
+            <h2 className="commentAuthor">
+              {this.props.author}
+            </h2>
+            <span dangerouslySetInnerHTML={{__html: rawMarkup}} />
+            {this.props.text}
+          </div>
+        );
+      }
+    });
+    
+    /*React.render(
+      <CommentBox />,
+      document.getElementById('mount-point')
+    ); */ 
+    
+    var data = [
+     {author:"foobar",text:"oh , goody!"},
+     {author:"zorg",text:"nope!!"}
+    ];
+    var url = "comments.json"; 
+    React.render(<CommentBox data={data} url={url}/>, document.getElementById('mount-point'));
+      
+    </script>
+  </body>
+</html>
