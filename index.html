@@ -21,7 +21,9 @@
             });
           },
           propTest:function(){
-            this.props.name = "thingamagic";
+            this.setProps({
+              name : "thingamagic"
+            });
           },
           ///
           render: function(){
@@ -45,6 +47,7 @@
           },
           shouldComponentUpdate:function( params ){
             console.log("should I update",params);
+            return true;
           }
       });
       React.renderComponent(
