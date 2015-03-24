@@ -51,3 +51,14 @@ Following tutorial at https://facebook.github.io/react/docs/tutorial.html
   
   
   
+  Following "tutorial" at https://facebook.github.io/react/docs/thinking-in-react.html
+    - first off : **great document!!** a lot of it can be used in general and is not react
+    specific
+      - split into logicial groups/components
+      - create a "static" version of the "app"/component first
+      - state goes into the component that is "above" the ones using it
+      - state of the "wrapper" element is usually one of the props of the sub elements
+      - the event handling/state changing is done in the **same** component that holds the state !!
+    - really liking the more explicit nature of interaction & "single" direction of data flow
+      - *data down , events up*
+  
