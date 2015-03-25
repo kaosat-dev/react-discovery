@@ -1,0 +1,45 @@
+// __tests__/CheckboxWithLabel-test.js
+var toTestPath = '../src/SmallComponent.jsx';
+jest.dontMock(toTestPath);
+
+describe('SmallComponent', function() {
+  afterEach(function(done) {
+      var React = require('react/addons');
+      React.unmountComponentAtNode(document.body) // Assuming mounted to document.body
+      document.body.innerHTML = ""                // Just to be sure :-P
+      setTimeout(done)
+  })
+
+  it('changes the text after click', function() {
+    var React = require('react/addons');
+    var SmallComponent = require(toTestPath);
+    var TestUtils = React.addons.TestUtils;
+
+    // Render a checkbox with label in the document
+    var smallCompo = TestUtils.renderIntoDocument(
+      <SmallComponent labelOn="On" labelOff="Off" />
+    );
+
+    // Verify that it's Off by default
+    var label = TestUtils.findRenderedDOMComponentWithTag(
+      smallCompo, 'label');
+    expect(label.getDOMNode().textContent).toEqual('Off');
+
+    // Simulate a click and verify that it is now On
+    var input = TestUtils.findRenderedDOMComponentWithClass(
+      smallCompo, 'labelOn');
+    TestUtils.Simulate.change(input);
+    expect(label.getDOMNode().textContent).toEqual('On');
+    
+    
+    var searchInput = TestUtils.findRenderedDOMComponentWithClass(
+      smallCompo, 'searchInput');
+    TestUtils.Simulate.change(searchInput, { target: { value: 'Hello, world' } } );
+    //TestUtils.Simulate.keypress(searchInput, { target: { value: 'H' } } );
+    
+    //.getDOMNode().textContent, {target: {value: 'Hello, world'}});
+    //expect(smallCompo.state.searchText).toEqual('Hello, world');
+    expect(searchInput.getDOMNode().value).toEqual('avb');
+
+  });
+});

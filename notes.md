@@ -62,3 +62,34 @@ Following tutorial at https://facebook.github.io/react/docs/tutorial.html
     - really liking the more explicit nature of interaction & "single" direction of data flow
       - *data down , events up*
   
+  
+  Following https://facebook.github.io/jest/docs/tutorial-react.html#content
+    - this time , we are dealing with server side tooling, testing etc
+    - testing
+      - is close to (based on jasmine) : good !
+      - seems slow... (take with a pinch or two of salt, test machine is not great)
+      - requires a bit of config in the main package file + extra file for jsx
+      - is a bit verbose but relatively clear
+      - requires tests to be in a __tests__ folder ? is that settable?
+      - correct that : tests are **way** too verbose
+      
+      - attempting to use "react-page-objects" to get rid of some clutter: 
+      https://github.com/QubitProducts/react-page-objects
+        - very nice , but not perfect:  added an experimental modifification at 
+          test5-build/__tests__/pageObject.js
+        - corresponding test at SmallComponent-test.js
+      - have not fully managed to get "checkbox" testing working
+     
+      
+    - browserify seems slow on react stuff, perhaps testing webpack + hot reload could
+    be good
+    
+    - jsx vs no jsx:
+      - jsx seems horrible at first, but not so bad really
+      - this:
+
+            var element = React.createElement(MyComponent); 
+      
+      is the same as
+      
+            var element = <MyComponent />;
